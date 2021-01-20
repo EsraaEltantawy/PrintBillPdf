@@ -1,0 +1,53 @@
+﻿
+@model IEnumerable<PrintBillPdf.Models.Order>
+<br /><br />
+<p class="alert alert-success">All orders</p>
+<div class="panel panel-default">
+   
+    @if (Model.Count() != 0)
+    {
+        
+            <div class="panel-body">
+              
+                                <table class="table table-bordered table-hover">
+                                    <tbody>
+                                        <tr class="alert alert-danger">
+                                            <th>Customer Name</th>
+                                            <th>Product</th>
+                                            <th>Quantity</th>
+                                            <th>Unit Price</th>
+                                            <th>Total</th>
+                                        </tr>
+                                        @{
+                                            var totalBill = 0;
+                                            int SumTotal = 0;
+                                        }
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.Customer.Name</td>
+                                                <td>@item.ProductName</td>
+                                                <td>@item.Quantity</td>
+                                                <td>@item.Price</td>
+                                                <td>@item.Amount</td>
+                                            </tr>
+                                            totalBill = totalBill + @Convert.ToInt32(item.Amount);
+                                     
+                                        }
+                                       
+                                    </tbody>
+                                </table>
+                <p class="alert alert-warning">SumTotal =@Convert.ToInt32(totalBill);</p>
+            </div>
+            @Html.ActionLink("Print", "PrintPDFAll", null, new { @class = "btn btn-danger" })
+
+                                            }
+                                            else
+                                            {
+                                                <div class="panel-body">
+                                                    <h3 style="color:red;">Empty!</h3>
+                                                </div>
+
+                                            }
+
+</div>
